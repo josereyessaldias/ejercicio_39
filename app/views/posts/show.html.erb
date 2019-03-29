@@ -12,20 +12,22 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-4">
-		<div class="well well-sm">
-			<legend>Comentar:</legend>
-			<%= form_with(model: [@post, Comment.new], local: true, html: { class: 'form-horizontal' }) do |f| %>
-				<div class="form-group">
-					<div class="col-md-12">
-						<%= f.text_area :content, placeholder: 'Escribe tu comentario aquí...', class: 'form-control' %>
+	<% if can? :create, Comment %>
+		<div class="col-md-4">
+			<div class="well well-sm">
+				<legend>Comentar:</legend>
+				<%= form_with(model: [@post, Comment.new], local: true, html: { class: 'form-horizontal' }) do |f| %>
+					<div class="form-group">
+						<div class="col-md-12">
+							<%= f.text_area :content, placeholder: 'Escribe tu comentario aquí...', class: 'form-control' %>
+						</div>
 					</div>
-				</div>
-				<%= f.submit 'Comentar', class: 'btn btn-primary' %>
-			<% end %>
-			  
+					<%= f.submit 'Comentar', class: 'btn btn-primary' %>
+				<% end %>
+				  
+			</div>
 		</div>
-	</div>
+	<% end %>
 	<div class="col-md-8">
 		<% counter = 0 %>
 		<% @comments.each do |comment| %>
@@ -35,7 +37,9 @@
 				<br>
 				<%= comment.content %>
 				<div class="text-right">
-					<%= link_to 'Eliminar', post_comment_path(@post,comment), method: :delete, data: { confirm: 'Estás seguro que deseas eliminar el Comentario?' }, class: 'btn btn-xs btn-danger' %>
+					<% if can? :destroy, comment %>
+						<%= link_to 'Eliminar', post_comment_path(@post,comment), method: :delete, data: { confirm: 'Estás seguro que deseas eliminar el Comentario?' }, class: 'btn btn-xs btn-danger' %>
+					<% end %>
 				</div>
 			</div>
 		<% end %>
