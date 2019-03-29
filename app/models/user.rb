@@ -7,4 +7,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   enum role: [:admin, :user]
+
+  attribute :role, :integer, default: :user
+  
 end

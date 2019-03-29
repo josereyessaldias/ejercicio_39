@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'pages/dashboard'
+  patch 'pages/change/:id', to: 'pages#change', as: 'change'
+  delete 'pages/erase/:id', to:'pages#erase_user', as: 'erase'
+
 	resources :posts do
 		resources :comments, only: [:create, :destroy]
 	end

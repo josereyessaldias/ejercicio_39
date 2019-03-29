@@ -37,6 +37,9 @@
 	      <ul class="nav navbar-nav navbar-right">
 	        <% if user_signed_in? %>
 	        	<li><a href="#">Hola <%= current_user.name %>!</a></li>
+	        	<% if can? :manage, :all %>
+	        		<li><a href="<%= pages_dashboard_path %>">Dashboard</a></li>
+	        	<% end %>
 	        	<li><%= link_to 'Cerrar sesión', destroy_user_session_path, method: :delete %></li>
 	        <% else %>
 	        	<li><%= link_to 'Inicia sesión', new_user_session_path %></li>
